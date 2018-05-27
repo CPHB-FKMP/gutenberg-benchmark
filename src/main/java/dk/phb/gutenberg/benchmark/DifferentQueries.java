@@ -12,12 +12,23 @@ public class DifferentQueries {
         
         int times = 10;
         
+        List<Double> neo4jCities = new ArrayList<>();
+        List<Double> neo4jTitles = new ArrayList<>();
+        List<Double> neo4jAuthors = new ArrayList<>();
+        List<Double> neo4jLocations = new ArrayList<>();
+        List<Double> postCities = new ArrayList<>();
+        List<Double> postTitles = new ArrayList<>();
+        List<Double> postAuthors = new ArrayList<>();
+        List<Double> postLocations = new ArrayList<>();
+        
         String[] cities = {
             "Copenhagen", 
             "Greve", 
             "London", 
             "Milton", 
-            "Venice"};
+            "Venice"
+        };
+        
         String[] titles = {
             "War in the Garden of Eden",
             "La Boheme",
@@ -25,6 +36,7 @@ public class DifferentQueries {
             "North America",
             "Hesiod, The Homeric Hymns, and Homerica"
         };
+        
         String[] authors = {
             "Georgiana Cavendish",
             "Lilian Garis",
@@ -45,97 +57,87 @@ public class DifferentQueries {
         System.out.println("----------------------------------------------------------------");
         System.out.println("Neo4J Cities");
         for (String city : cities) {
-            List<Double> results = new ArrayList<>();
             for (int i = 0; i < times; i++) {
-                neo.getBooksByCity(city, results);  
+                neo.getBooksByCity(city, neo4jCities);  
             }
-            System.out.println("Get all books that mention " + city);
-            System.out.println("Average time in milliseconds for this Query: " + neo.getAverage(results));
-            System.out.println("Median time in milliseconds for this Query: " + neo.getMedian(results));
-            System.out.println("----------------------------------------------------------------");
         }
+        System.out.println("Get all books that mention city");
+        System.out.println("Average time in milliseconds for this Query: " + neo.getAverage(neo4jCities));
+        System.out.println("Median time in milliseconds for this Query: " + neo.getMedian(neo4jCities));
+        System.out.println("----------------------------------------------------------------");
+        
         System.out.println("Neo4J Titles");
         for (String title : titles) {
-            List<Double> results = new ArrayList<>();
             for (int i = 0; i < times; i++) {
-                neo.getAllCitiesInBook(title, results);  
+                neo.getAllCitiesInBook(title, neo4jTitles);  
             }
-            System.out.println("get all cities mentioned in " + title);
-            System.out.println("Average time in milliseconds for this Query: " + neo.getAverage(results));
-            System.out.println("Median time in milliseconds for this Query: " + neo.getMedian(results));
-            System.out.println("----------------------------------------------------------------");
-        }
-        System.out.println("Neo4J Authors");     
-        for (String author : authors) {
-            List<Double> results = new ArrayList<>();
-            for (int i = 0; i < times; i++) {
-                neo.getBooksAndCitiesByAuthor(author, results);  
-            }
-            System.out.println("Get all books and the cities they mention by author " + author);
-            System.out.println("Average time in milliseconds for this Query: " + neo.getAverage(results));
-            System.out.println("Median time in milliseconds for this Query: " + neo.getMedian(results));
-            System.out.println("----------------------------------------------------------------");
-        }
-        System.out.println("Neo4J Locations");
-        for (String[] location : locations) {
-            List<Double> results = new ArrayList<>();
-            for (int i = 0; i < times; i++) {
-                neo.getAllBooksWrittenNearby(location[0], location[1], results);
-            }
-            System.out.println("Get all books that mention a city Nearby latitude : " + location[0] + " Longitude : " + location[1] );
-            System.out.println("Average time in milliseconds for this Query: " + neo.getAverage(results));
-            System.out.println("Median time in milliseconds for this Query: " + neo.getMedian(results));
-            System.out.println("----------------------------------------------------------------");
             
         }
+        System.out.println("Average time in milliseconds for this Query: " + neo.getAverage(neo4jTitles));
+        System.out.println("Median time in milliseconds for this Query: " + neo.getMedian(neo4jTitles));
+        System.out.println("----------------------------------------------------------------");
+        
+        System.out.println("Neo4J Authors");     
+        for (String author : authors) {
+            for (int i = 0; i < times; i++) {
+                neo.getBooksAndCitiesByAuthor(author, neo4jAuthors);  
+            }
+        }
+        System.out.println("Average time in milliseconds for this Query: " + neo.getAverage(neo4jAuthors));
+        System.out.println("Median time in milliseconds for this Query: " + neo.getMedian(neo4jAuthors));
+        System.out.println("----------------------------------------------------------------");
+        
+        System.out.println("Neo4J Locations");
+        for (String[] location : locations) {
+            for (int i = 0; i < times; i++) {
+                neo.getAllBooksWrittenNearby(location[0], location[1], neo4jLocations);
+            }
+        }
+        System.out.println("Average time in milliseconds for this Query: " + neo.getAverage(neo4jLocations));
+        System.out.println("Median time in milliseconds for this Query: " + neo.getMedian(neo4jLocations));
+        System.out.println("----------------------------------------------------------------");
 
         System.out.println("POSTGRESQL QUERIES");
         System.out.println("----------------------------------------------------------------");
         System.out.println("Postgres Cities");
         for (String city : cities) {
-            List<Double> results = new ArrayList<>();
             for (int i = 0; i < times; i++) {
-                pos.GetBooksByCity(city, results);  
+                pos.GetBooksByCity(city, postCities);  
             }
-            System.out.println("Get all books that mention " + city);
-            System.out.println("Average time in milliseconds for this Query: " + neo.getAverage(results));
-            System.out.println("Median time in milliseconds for this Query: " + neo.getMedian(results));
-            System.out.println("----------------------------------------------------------------");
         }
+        System.out.println("Average time in milliseconds for this Query: " + neo.getAverage(postCities));
+        System.out.println("Median time in milliseconds for this Query: " + neo.getMedian(postCities));
+        System.out.println("----------------------------------------------------------------");
+        
         System.out.println("Postgres Titles");
         for (String title : titles) {
-            List<Double> results = new ArrayList<>();
             for (int i = 0; i < times; i++) {
-                pos.GetAllcitiesInBook(title, results);  
+                pos.GetAllcitiesInBook(title, postTitles);  
             }
-            System.out.println("get all cities mentioned in " + title);
-            System.out.println("Average time in milliseconds for this Query: " + neo.getAverage(results));
-            System.out.println("Median time in milliseconds for this Query: " + neo.getMedian(results));
-            System.out.println("----------------------------------------------------------------");
         }
+        System.out.println("Average time in milliseconds for this Query: " + neo.getAverage(postTitles));
+        System.out.println("Median time in milliseconds for this Query: " + neo.getMedian(postTitles));
+        System.out.println("----------------------------------------------------------------");
+        
         System.out.println("Postgres Authors");     
         for (String author : authors) {
-            List<Double> results = new ArrayList<>();
             for (int i = 0; i < times; i++) {
-                pos.GetBooksAndCitiesByAuthor(author, results);  
+                pos.GetBooksAndCitiesByAuthor(author, postAuthors);  
             }
-            System.out.println("Get all books and the cities they mention by author " + author);
-            System.out.println("Average time in milliseconds for this Query: " + neo.getAverage(results));
-            System.out.println("Median time in milliseconds for this Query: " + neo.getMedian(results));
-            System.out.println("----------------------------------------------------------------");
         }
+        System.out.println("Average time in milliseconds for this Query: " + neo.getAverage(postAuthors));
+        System.out.println("Median time in milliseconds for this Query: " + neo.getMedian(postAuthors));
+        System.out.println("----------------------------------------------------------------");
+        
         System.out.println("Postgres Locations");
         for (String[] location : locations) {
-            List<Double> results = new ArrayList<>();
             for (int i = 0; i < times; i++) {
-                pos.GetAllBooksWrittenNearby(location[0], location[1], results);
+                pos.GetAllBooksWrittenNearby(location[0], location[1], postLocations);
             }
-            System.out.println("Get all books that mention a city Nearby latitude : " + location[0] + " Longitude : " + location[1] );
-            System.out.println("Average time in milliseconds for this Query: " + neo.getAverage(results));
-            System.out.println("Median time in milliseconds for this Query: " + neo.getMedian(results));
-            System.out.println("----------------------------------------------------------------");
-            
         }
+        System.out.println("Average time in milliseconds for this Query: " + neo.getAverage(postLocations));
+        System.out.println("Median time in milliseconds for this Query: " + neo.getMedian(postLocations));
+        System.out.println("----------------------------------------------------------------");
     }
 
 }
