@@ -119,7 +119,7 @@ public class DifferentQueries {
             for (int i = 0; i < times; i++) {
                 pos.GetBooksAndCitiesByAuthor(author, results);  
             }
-            System.out.println("Get all books and the cities they mention by author name");
+            System.out.println("Get all books and the cities they mention by author " + author);
             System.out.println("Average time in milliseconds for this Query: " + neo.getAverage(results));
             System.out.println("Median time in milliseconds for this Query: " + neo.getMedian(results));
             System.out.println("----------------------------------------------------------------");
